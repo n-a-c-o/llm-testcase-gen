@@ -120,37 +120,24 @@ def generate_test_cases():
     templates = random.sample(TEST_CASE_TEMPLATES, num_test_cases)
     
     for template in templates:
-        if "{condition}" in template and "{expected_result}" in template:
-            test_case = template.format(
-                condition=random.choice(CONDITIONS),
-                expected_result=random.choice(EXPECTED_RESULTS)
-            )
-        elif "{action_detail}" in template and "{expected_result}" in template:
-            test_case = template.format(
-                action_detail=random.choice(ACTION_DETAILS),
-                expected_result=random.choice(EXPECTED_RESULTS)
-            )
-        elif "{negative_condition}" in template and "{negative_result}" in template:
-            test_case = template.format(
-                negative_condition=random.choice(NEGATIVE_CONDITIONS),
-                negative_result=random.choice(NEGATIVE_RESULTS)
-            )
-        elif "{edge_case}" in template and "{edge_case_result}" in template:
-            test_case = template.format(
-                edge_case=random.choice(EDGE_CASES),
-                edge_case_result=random.choice(EDGE_CASE_RESULTS)
-            )
-        else:
-            test_case = template.format(
-                condition=random.choice(CONDITIONS),
-                expected_result=random.choice(EXPECTED_RESULTS),
-                action_detail=random.choice(ACTION_DETAILS),
-                negative_condition=random.choice(NEGATIVE_CONDITIONS),
-                negative_result=random.choice(NEGATIVE_RESULTS),
-                edge_case=random.choice(EDGE_CASES),
-                edge_case_result=random.choice(EDGE_CASE_RESULTS)
-            )
+        format_dict = {}
         
+        if "{condition}" in template:
+            format_dict["condition"] = random.choice(CONDITIONS)
+        if "{expected_result}" in template:
+            format_dict["expected_result"] = random.choice(EXPECTED_RESULTS)
+        if "{action_detail}" in template:
+            format_dict["action_detail"] = random.choice(ACTION_DETAILS)
+        if "{negative_condition}" in template:
+            format_dict["negative_condition"] = random.choice(NEGATIVE_CONDITIONS)
+        if "{negative_result}" in template:
+            format_dict["negative_result"] = random.choice(NEGATIVE_RESULTS)
+        if "{edge_case}" in template:
+            format_dict["edge_case"] = random.choice(EDGE_CASES)
+        if "{edge_case_result}" in template:
+            format_dict["edge_case_result"] = random.choice(EDGE_CASE_RESULTS)
+        
+        test_case = template.format(**format_dict)
         test_cases.append(test_case)
     
     return "\n".join(test_cases)
